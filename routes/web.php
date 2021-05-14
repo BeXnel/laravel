@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use DB;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +23,15 @@ Route::get('/{tasks}/{imie}/{nazwisko}', function ($tasks, $imie, $nazwisko) {
     return view('index', ['user' => 'John'], ['tasks' => $tasks, 'imie' => $imie, 'nazwisko' => $nazwisko]);
 });
 
-Route::post('/admin', function () {
-    return view('index');
-});
 
-Route::get('posts', function () {
-    $posts = DB::table('posts')->where('view', '>', 100 )->get();
+Route::get('pages/create', 'App\Http\Controllers\PageController@create');
 
-    return view('posts.index', ['posts' => $posts]);
-});
+Route::post('pages', 'App\Http\Controllers\PageController@store');
+
+Route::get('/pages/{slug}', 'App\Http\Controllers\PageController@show');
+
+Route::get('pages', 'App\Http\Controllers\PageController@index');
+
+
+
 
